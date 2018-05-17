@@ -1,31 +1,31 @@
 package com.WeblogicNJersey2.service;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 @Path("/message")
 public class JerseyService {
     
+    @PermitAll
     @GET
     @Path("/getMessage")
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     public String getMsg()
     {
         return "{\"message\":\"Hello World\"}";
     }
     
+    @RolesAllowed("ADMIN")
     @GET
-    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/testAuthentic")
-    public String testAuthentic(@Context HttpServletRequest req){
-        System.out.println(req.getAuthType());
-        //boolean b = Authenication.isUserAuthenticated(authString);
+    public String testAuthentic(){
         return "{\"message\":\"testing\"}";
     }
     
